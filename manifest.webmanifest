@@ -1,0 +1,13 @@
+{
+    "lang": "fr",
+    "dir": "ltr",
+    "name": "Bonus Almanax",
+    "description": "Application par Otema et Saine",
+    "short_name": "BA",
+    "scope": "/",
+    "start_url": "/",
+    "display": "fullscreen",
+    "orientation": "portrait",
+    "theme_color": "white",
+    "background_color": "red"
+  }

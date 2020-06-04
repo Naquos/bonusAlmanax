@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bonus Almanax</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="manifest" href="manifest.webmanifest">
+
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+    <!-- Custom styles for this template-->
+    <!-- <link href="/css/sb-admin-2.min.css" rel="stylesheet"> -->
+
+</head>
+
+<body>
+    <style>
+        img {
+            width: 80%;
+        }
+
+        .divACacher {
+            display: none;
+        }
+
+        button {
+            width: 80%;
+            margin-left: 10%;
+            margin-top: 1%;
+            margin-bottom: 1%;
+        }
+    </style>
+
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center"
+                style="color:white;cursor:pointer">
+                <div class="sidebar-brand-icon rotate-n-15" onclick='afficherUnElement("div1")'>
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Bonus Almanax</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active" onclick='afficherUnElement("div1")' style="cursor:pointer">
+                <a class="nav-link">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Index</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Interface
+            </div>
+
+            <li class="nav-item" onclick='afficherUnElement("div1")' style="cursor:pointer">
+                <a class="nav-link">
+                    <i class="fa fa-calendar"></i>
+                    <span>Bonus du jour</span></a>
+            </li>
+
+            <li class="nav-item" onclick='afficherUnElement("div2")' style="cursor:pointer">
+                <a class="nav-link">
+                    <i class="fa fa-clipboard-list"></i>
+                    <span>Bonus Stasis & Wakfu</span></a>
+            </li>
+
+            <li class="nav-item" onclick='afficherUnElement("div3")' style="cursor:pointer">
+                <a class="nav-link">
+                    <i class="fas fa-fw fa-calendar-alt"></i>
+                    <span>Bonus à la date de votre choix</span></a>
+            </li>
+
+            <li class="nav-item" onclick='afficherUnElement("div4")' style="cursor:pointer">
+                <a class="nav-link">
+                    <i class="fas fa-fw fa-info-circle"></i>
+                    <span>Remarques pour l'utilisateur</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Autre
+            </div>
+
+            <li class="nav-item" onclick='afficherUnElement("div5")' style="cursor:pointer">
+                <a class="nav-link">
+                    <i class="fa fa-calendar"></i>
+                    <span>Se plaindre</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Site proposé par Otema et
+                                    Saine</span>
+                                <img class="img-profile rounded-circle"
+                                    src="https://www.nautiljon.com/images/anime/00/41/elfen_lied_114.jpg">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <div class="row">
+
+                        <div class="offset-lg-2 col-xl-8 col-lg-8">
+                            <div id="div1" class="divACacher">
+                                <div class="card shadow mb-4">
+                                    <!-- Card Header - Dropdown -->
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary"> Bonus Almanax, fuseau horaire
+                                            UTC+1
+                                        </h6>
+                                    </div>
+                                    <!-- Card Body -->
+                                    <div class="card-body">
+                                        <img src="https://methodwakfu.com/wp-content/uploads/2019/04/Biblio_Wakfu.png"
+                                            alt="" style="display:block;margin:auto">
+                                        <br>
+                                        <h2 style="text-align:center" id="bonus">bonus</h2>
+                                        <br>
+                                        <h3 style="text-align:center" id="information">
+                                        </h3>
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <button type="button" class="btn btn-primary"
+                                                    onclick="bonusPrecedant()">Bonus
+                                                    précédent</button>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <button type="button" class="btn btn-primary"
+                                                    onclick="bonusDuJour()">Bonus du
+                                                    jour</button>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <button type="button" class="btn btn-primary"
+                                                    onclick="bonusSuivant()">Bonus
+                                                    suivant</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="div2" class="divACacher">
+                                <div class="card shadow mb-4">
+                                    <!-- Card Header - Dropdown -->
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary"> Bonus source de Stasis & source
+                                            de Wakfu
+                                        </h6>
+                                    </div>
+                                    <!-- Card Body -->
+                                    <div class="card-body">
+                                        <img src="https://i.ibb.co/d7mMTWN/Wakfu-Carte-d-Astrub.png" alt=""
+                                            style="display:block;margin:auto">
+                                        <br>
+                                        <h2 style="text-align:center" id="conditionSource">Êtes-vous plutôt destructeur
+                                            ou constructeur
+                                            ?</h2>
+                                        <br>
+                                        <h3 style="text-align:center" id="bonusSource">
+                                        </h3>
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <button type="button" class="btn btn-primary"
+                                                    onclick="bonusStasis()">Source de
+                                                    Stasis</button>
+                                            </div>
+                                            <div class="col-lg-4">
+
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <button type="button" class="btn btn-primary"
+                                                    onclick="bonusWakfu()">Source de
+                                                    Wakfu</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="div3" class="divACacher">
+                                <div class="card shadow mb-4">
+                                    <!-- Card Header - Dropdown -->
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary"> Calcul du bonus Almanax à la date
+                                            de votre choix
+                                        </h6>
+                                    </div>
+                                    <!-- Card Body -->
+                                    <div class="card-body">
+                                        <img src="https://methodwakfu.com/wp-content/uploads/2019/04/Biblio_Wakfu.png"
+                                            alt="" style="display:block;margin:auto">
+                                        <br>
+                                        <h2 style="text-align:center" id="bonusCalcul">Entrez la date de votre choix
+                                            pour découvrir le
+                                            bonus associé</h2>
+                                        <br>
+                                        <h3 style="text-align:center" id="informationCalcul">
+                                        </h3>
+                                        <div class="row">
+                                            <div class='col-lg-1'></div>
+                                            <div class="col-lg-10">
+                                                <form>
+                                                    <label for="start" style="width:100%">Choix de la date
+                                                        :</label>
+
+                                                    <input type="date" class="form-control" aria-label="Small"
+                                                        aria-describedby="inputGroup-sizing-sm"
+                                                        onchange="bonusDuJourCalcul()" id="date" name="bonusDateCalcul"
+                                                        style="width:100%" min="2020-01-01" max="2099-12-31">
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="div4" class="divACacher">
+                                <div class="card shadow mb-4">
+                                    <!-- Card Header - Dropdown -->
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary"> Remarques importantes
+                                        </h6>
+                                    </div>
+                                    <!-- Card Body -->
+                                    <div class="card-body">
+                                        <ol type="I">
+                                            <li>Si ce fuseau horaire ne correspond pas au votre, adressez-vous à Otema
+                                                l'Empaleur.</li>
+                                            <li>Il est possible de visualiser les images en plus grand : clic droit +
+                                                ouvrir l'image
+                                                dans un nouvel onglet, notamment pour connaître les emplacements des
+                                                sources de Stasis &
+                                                de Wakfu.</li>
+                                            <li>Si vous vous trouvez dans le fuseau horaire f (f peut être négatif selon
+                                                votre
+                                                localisation) le bonus changera à l'heure (f-1):00, si (f-1) est négatif
+                                                alors le bonus
+                                                changera à l'heure (24+f-1):00.</li>
+                                            <li>Pour faciliter la navigation entre les dates, sélectionnez l'objet à
+                                                varier et utilisez
+                                                les flèches haut ou bas de votre clavier d'ordinateur lorsque vous
+                                                utilisez un
+                                                ordinateur.</li>
+                                            <li>ATTENTION NE PAS choisir une date inexistante, le calcul NE sera PAS
+                                                effectué, et c'est
+                                                la DERNIÈRE valeur calculée qui sera affichée.</li>
+                                            <li>Toutes sortes de remarques, critiques et suggestions sont les
+                                                bienvenues, n'hésitez pas
+                                                à nous contacter sur Discord =).</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="div5" class="divACacher">
+                                <div class="card shadow mb-4">
+                                    <!-- Card Header - Dropdown -->
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary"> Pour ceux qui aiment se plaindre
+                                        </h6>
+                                    </div>
+                                    <!-- Card Body -->
+                                    <div class="card-body">
+                                        <div id="messagePlainte"></div>
+                                        <div class="form-group">
+                                            <label for="zonePlainte">Ecrivez votre plainte</label>
+                                            <textarea class="form-control" id="zonePlainte" rows="3"
+                                                placeholder="Je suis pas content car..."></textarea>
+                                        </div>
+                                        <button type="button" class="btn btn-primary"
+                                            onclick="afficherMessagePlainte()">Envoyer la plainte</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+
+
+</body>
+
+</html>
+<script>
+    function afficherMessagePlainte() {
+        $("#messagePlainte").html(`<div class="alert alert-success alert-dismissible fade show" role="alert" id="messagePlainte">
+                                            Votre plainte n'a pas été retenue.
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                                                style="width: auto;">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>`);
+    }
+
+    function cacherLesElements() {
+        // $() <- Sélecteur jQuery (jQuery truc pour réduire l'écriture du code JS)
+        // Ici on choisit de récupérer tous les élément html qui possèdent la classe "divACacher"
+        // On aurait également pu utiliser le document.getElementsByClassName("myClass") pour récupérer nos différents éléments
+        // Ce qui est contenu dans le each c'est du lambda calcul : où comment écrire une instruction en 1 ligne au lieu de 3+ ^^
+        // Si tu comprends pas c'est normal ^^
+        $(".divACacher").each((index, element) => $(element).hide());
+    }
+
+    function afficherUnElement(idElement) {
+        cacherLesElements();
+        // Là on utilise encore le sélecteur jQuery mais pour récupérer un élément par rapport à son id
+        // Attention les fonctions show() et hide() sont des fonctions jQuerry
+        // Pour faire la même chose en js : 
+        // - Pour afficher : document.getElementById(idElement).style.display="";
+        // - Pour cacher : document.getElementById(idElement).style.display="none";
+        $("#" + idElement).show();
+    }
+    afficherUnElement("div1");
+
+    nbBonus = 5;
+
+    function dayDiff(d1, d2) {
+        d1 = d1.getTime() / 86400000;
+        d2 = d2.getTime() / 86400000;
+        return parseInt((new Number(d2 - d1 + (1 / 24))));
+    }
+
+    function bonusDuJour() {
+
+        let date1 = new Date("1 January 2000");
+        let date2 = new Date();
+
+        indiceBonus = (Number(dayDiff(date1, date2)) + 2) % nbBonus;
+        afficherBonus();
+    }
+
+    function bonusSuivant() {
+        indiceBonus = (indiceBonus + 1) % nbBonus;
+        afficherBonus();
+    }
+
+    function bonusPrecedant() {
+        indiceBonus = (indiceBonus - 1) % nbBonus;
+        if (indiceBonus < 0) {
+            indiceBonus = nbBonus - 1;
+        }
+        afficherBonus();
+    }
+
+    function afficherBonus() {
+        listeBonus = ["Sagesse", "Prospection", "Fabrication", "Xp récolte & Xp plantation",
+            "Quantité récoltée & Chance plantation"
+        ];
+        $("#bonus").html(listeBonus[indiceBonus]);
+        listeTexteAAfficher = ["+40 Sagesse [2H]", "+40 Prospection [2H]", "+20% (Xp & Vitesse) Fabrication [2H]",
+            "+30% Xp (récolte & plantation) [2H]", "+20% (Quantité récoltée & Chance plantation) [2H]"
+        ];
+        $("#information").html(listeTexteAAfficher[indiceBonus]);
+    }
+
+    indiceBonus = 0;
+
+    bonusDuJour();
+
+    function bonusStasis() {
+
+        indiceBonusSource = 0
+
+        afficherBonusSource();
+    }
+
+    function bonusWakfu() {
+
+        indiceBonusSource = 1
+
+        afficherBonusSource();
+    }
+
+    function afficherBonusSource() {
+        listeConditionSource = ["Condition d'accès : Jauge WS>50% Stasis", "Condition d'accès : Jauge WS>50% Wakfu"];
+        $("#conditionSource").html(listeConditionSource[indiceBonusSource]);
+        listeBonusSource = ["+10% Xp récolte [30 min]", "+30% Xp plantation [30 min]"];
+        $("#bonusSource").html(listeBonusSource[indiceBonusSource]);
+    }
+
+    nbBonusCalcul = 5;
+
+    function dayDiffCalcul(d1, d2) {
+        d1 = d1.getTime() / 86400000;
+        d2 = d2.getTime() / 86400000;
+        return parseInt((new Number(d2 - d1)));
+    }
+
+    function getUserDayInput() {
+        let monString = document.getElementById("date").value;
+        var date = new Date(monString)
+        return date
+    }
+
+    function bonusDuJourCalcul() {
+
+        let date1 = new Date("1 January 2000");
+        let date2 = getUserDayInput();
+
+        indiceBonusCalcul = (Number(dayDiffCalcul(date1, date2)) + 2) % nbBonusCalcul;
+        afficherBonusCalcul();
+    }
+
+    function afficherBonusCalcul() {
+        listeBonusCalcul = ["Sagesse", "Prospection", "Fabrication", "Xp récolte & Xp plantation",
+            "Quantité récoltée & Chance plantation"
+        ];
+        $("#bonusCalcul").html(listeBonus[indiceBonusCalcul]);
+        listeTexteAAfficherCalcul = ["+40 Sagesse [2H]", "+40 Prospection [2H]", "+20% (Xp & Vitesse) Fabrication [2H]",
+            "+30% Xp (récolte & plantation) [2H]", "+20% (Quantité récoltée & Chance plantation) [2H]"
+        ];
+        $("#informationCalcul").html(listeTexteAAfficherCalcul[indiceBonusCalcul]);
+    }
+
+    indiceBonusCalcul = 0;
+
+    bonusDuJourCalcul();
+</script>
