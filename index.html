@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <title>Bonus Almanax</title>
@@ -395,9 +395,30 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <!--- Liste des métiers ---->
-                                            <div class="col-lg-4 col-xl-4"> </div>
+                                            <div class="col-lg-4 col-xl-4" id="listeMetierCollapse">
+
+                                            </div>
                                             <!---- Son contenu -->
-                                            <div class="col-lg-8 col-xl-8"> </div>
+                                            <div class="col-lg-8 col-xl-8">
+                                                <h2 style="text-align: center;">
+                                                    Commandes - <span id="nomJoueurCommande"></span>
+                                                </h2>
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Date demande</th>
+                                                                <th scope="col">Demandeur</th>
+                                                                <th scope="col">Item</th>
+                                                                <th scope="col">Nombre</th>
+                                                                <th scope="col">Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="bodyListeCommande">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -429,8 +450,10 @@
 </body>
 
 </html>
+<!----------   Le code JavaScript a été déplacé dans les fichiers js écrit ci-dessous         ----------------->
 <script src="js/bonusAlmanax.js"></script>
 <script src="js/fonctionnementSite.js"></script>
+<script src="js/listeMetier.js"></script>
 <script>
     function afficherMessagePlainte() {
         $("#messagePlainte").html(`<div class="alert alert-success alert-dismissible fade show" role="alert" id="messagePlainte">
