@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <title>Bonus Almanax</title>
@@ -93,10 +93,19 @@
                     <span>Bonus à la date de votre choix</span></a>
             </li>
 
-            <li class="nav-item" onclick='afficherUnElement("div4")' style="cursor:pointer">
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Commerce
+            </div>
+
+            <li class="nav-item" onclick='afficherUnElement("div6")' style="cursor:pointer">
                 <a class="nav-link">
-                    <i class="fas fa-fw fa-info-circle"></i>
-                    <span>Remarques pour l'utilisateur</span></a>
+                    <i class="fa fa-calendar"></i>
+                    <span>Liste des métiers</span>
+                </a>
             </li>
 
             <!-- Divider -->
@@ -111,6 +120,13 @@
                 <a class="nav-link">
                     <i class="fa fa-calendar"></i>
                     <span>Se plaindre</span></a>
+            </li>
+
+
+            <li class="nav-item" onclick='afficherUnElement("div4")' style="cursor:pointer">
+                <a class="nav-link">
+                    <i class="fas fa-fw fa-info-circle"></i>
+                    <span>Remarques pour l'utilisateur</span></a>
             </li>
 
             <!-- Divider -->
@@ -189,7 +205,7 @@
 
                     <div class="row">
 
-                        <div class="offset-lg-2 col-xl-8 col-lg-8">
+                        <div class="offset-lg-1 col-xl-10 col-lg-10">
                             <div id="div1" class="divACacher">
                                 <div class="card shadow mb-4">
                                     <!-- Card Header - Dropdown -->
@@ -344,6 +360,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <!---------------------------------------- Plainte ---------------------------------------------------------->
                             <div id="div5" class="divACacher">
                                 <div class="card shadow mb-4">
                                     <!-- Card Header - Dropdown -->
@@ -362,6 +379,47 @@
                                         </div>
                                         <button type="button" class="btn btn-primary"
                                             onclick="afficherMessagePlainte()">Envoyer la plainte</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--------------------------- Métier  ------------------------------------------------------------->
+                            <div id="div6" class="divACacher">
+                                <div class="card shadow mb-4">
+                                    <!-- Card Header - Dropdown -->
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary"> Liste des métiers
+                                        </h6>
+                                    </div>
+                                    <!-- Card Body -->
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <!--- Liste des métiers ---->
+                                            <div class="col-lg-4 col-xl-4" id="listeMetierCollapse">
+
+                                            </div>
+                                            <!---- Son contenu -->
+                                            <div class="col-lg-8 col-xl-8">
+                                                <h2 style="text-align: center;">
+                                                    Commandes - <span id="nomJoueurCommande"></span>
+                                                </h2>
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Date demande</th>
+                                                                <th scope="col">Demandeur</th>
+                                                                <th scope="col">Item</th>
+                                                                <th scope="col">Nombre</th>
+                                                                <th scope="col">Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="bodyListeCommande">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -392,6 +450,10 @@
 </body>
 
 </html>
+<!----------   Le code JavaScript a été déplacé dans les fichiers js écrit ci-dessous         ----------------->
+<script src="js/bonusAlmanax.js"></script>
+<script src="js/fonctionnementSite.js"></script>
+<script src="js/listeMetier.js"></script>
 <script>
     function afficherMessagePlainte() {
         $("#messagePlainte").html(`<div class="alert alert-success alert-dismissible fade show" role="alert" id="messagePlainte">
@@ -402,128 +464,4 @@
                                             </button>
                                         </div>`);
     }
-
-    function cacherLesElements() {
-        // $() <- Sélecteur jQuery (jQuery truc pour réduire l'écriture du code JS)
-        // Ici on choisit de récupérer tous les élément html qui possèdent la classe "divACacher"
-        // On aurait également pu utiliser le document.getElementsByClassName("myClass") pour récupérer nos différents éléments
-        // Ce qui est contenu dans le each c'est du lambda calcul : où comment écrire une instruction en 1 ligne au lieu de 3+ ^^
-        // Si tu comprends pas c'est normal ^^
-        $(".divACacher").each((index, element) => $(element).hide());
-    }
-
-    function afficherUnElement(idElement) {
-        cacherLesElements();
-        // Là on utilise encore le sélecteur jQuery mais pour récupérer un élément par rapport à son id
-        // Attention les fonctions show() et hide() sont des fonctions jQuerry
-        // Pour faire la même chose en js : 
-        // - Pour afficher : document.getElementById(idElement).style.display="";
-        // - Pour cacher : document.getElementById(idElement).style.display="none";
-        $("#" + idElement).show();
-    }
-    afficherUnElement("div1");
-
-    nbBonus = 5;
-
-    function dayDiff(d1, d2) {
-        d1 = d1.getTime() / 86400000;
-        d2 = d2.getTime() / 86400000;
-        return parseInt((new Number(d2 - d1 + (1 / 24))));
-    }
-
-    function bonusDuJour() {
-
-        let date1 = new Date("1 January 2000");
-        let date2 = new Date();
-
-        indiceBonus = (Number(dayDiff(date1, date2)) + 2) % nbBonus;
-        afficherBonus();
-    }
-
-    function bonusSuivant() {
-        indiceBonus = (indiceBonus + 1) % nbBonus;
-        afficherBonus();
-    }
-
-    function bonusPrecedant() {
-        indiceBonus = (indiceBonus - 1) % nbBonus;
-        if (indiceBonus < 0) {
-            indiceBonus = nbBonus - 1;
-        }
-        afficherBonus();
-    }
-
-    function afficherBonus() {
-        listeBonus = ["Sagesse", "Prospection", "Fabrication", "Xp récolte & Xp plantation",
-            "Quantité récoltée & Chance plantation"
-        ];
-        $("#bonus").html(listeBonus[indiceBonus]);
-        listeTexteAAfficher = ["+40 Sagesse [2H]", "+40 Prospection [2H]", "+20% (Xp & Vitesse) Fabrication [2H]",
-            "+30% Xp (récolte & plantation) [2H]", "+20% (Quantité récoltée & Chance plantation) [2H]"
-        ];
-        $("#information").html(listeTexteAAfficher[indiceBonus]);
-    }
-
-    indiceBonus = 0;
-
-    bonusDuJour();
-
-    function bonusStasis() {
-
-        indiceBonusSource = 0
-
-        afficherBonusSource();
-    }
-
-    function bonusWakfu() {
-
-        indiceBonusSource = 1
-
-        afficherBonusSource();
-    }
-
-    function afficherBonusSource() {
-        listeConditionSource = ["Condition d'accès : Jauge WS>50% Stasis", "Condition d'accès : Jauge WS>50% Wakfu"];
-        $("#conditionSource").html(listeConditionSource[indiceBonusSource]);
-        listeBonusSource = ["+10% Xp récolte [30 min]", "+30% Xp plantation [30 min]"];
-        $("#bonusSource").html(listeBonusSource[indiceBonusSource]);
-    }
-
-    nbBonusCalcul = 5;
-
-    function dayDiffCalcul(d1, d2) {
-        d1 = d1.getTime() / 86400000;
-        d2 = d2.getTime() / 86400000;
-        return parseInt((new Number(d2 - d1)));
-    }
-
-    function getUserDayInput() {
-        let monString = document.getElementById("date").value;
-        var date = new Date(monString)
-        return date
-    }
-
-    function bonusDuJourCalcul() {
-
-        let date1 = new Date("1 January 2000");
-        let date2 = getUserDayInput();
-
-        indiceBonusCalcul = (Number(dayDiffCalcul(date1, date2)) + 2) % nbBonusCalcul;
-        afficherBonusCalcul();
-    }
-
-    function afficherBonusCalcul() {
-        listeBonusCalcul = ["Sagesse", "Prospection", "Fabrication", "Xp récolte & Xp plantation",
-            "Quantité récoltée & Chance plantation"
-        ];
-        $("#bonusCalcul").html(listeBonus[indiceBonusCalcul]);
-        listeTexteAAfficherCalcul = ["+40 Sagesse [2H]", "+40 Prospection [2H]", "+20% (Xp & Vitesse) Fabrication [2H]",
-            "+30% Xp (récolte & plantation) [2H]", "+20% (Quantité récoltée & Chance plantation) [2H]"
-        ];
-        $("#informationCalcul").html(listeTexteAAfficherCalcul[indiceBonusCalcul]);
-    }
-
-    indiceBonusCalcul = 0;
-
-    bonusDuJourCalcul();
 </script>
