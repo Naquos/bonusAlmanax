@@ -60,6 +60,10 @@ function changeArrow(element) {
  * @param {String} lvlMetier 
  */
 function createHtmlPersonnageInListe(nomMetier, nomPersonnage, lvlMetier) {
+    if(nomMetier == "Maitre d 'armes") {
+        //Petite modif pour éviter de faire planter le html
+        nomMetier = "MaitreArme";
+    }
     return `
     <div style="background-color: #f3f3f3; border-radius: 10px;
                 margin-left:3%;width:94%;border:#e3e3e3 solid 1px; 
@@ -75,6 +79,10 @@ function createHtmlPersonnageInListe(nomMetier, nomPersonnage, lvlMetier) {
  * @param {String} joueur 
  */
 function afficherCommande(metier, joueur) {
+    if(metier == "MaitreArme") {
+        //Petite modif pour éviter de faire planter le html
+        metier = "Maitre d 'armes";
+    }
     $("#nomJoueurCommande").html(joueur);
     let commandes = "Commandes";
     let listeCommande = listeMetier[metier][joueur][commandes];
