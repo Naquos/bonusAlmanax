@@ -129,19 +129,51 @@ function createHtmlColorStatus(status) {
     `;
 }
 
+/**
+ * 
+ * @param {String} listeNomMetier 
+ */
+function createChoixMetier(listeNomMetier) {
+    let html = "";
+    listeNomMetier.forEach(x => html += "<option>" + x + "</option>");
+    $("#metierSave").html(html);
+}
+
+function addOrUpdateMetier() {
+    let nomArtisan = $("#nomArtisanSave").val();
+    let metier = $("#metierSave").val();
+    let lvlArtisan = $("#lvlArtisanSave").val();
+    if (nomArtisan == "" || lvlArtisan == 0) {
+        //Si la saisie est incorrecte, on sort de la fonction
+        return;
+    }
+    if (listeMetier[metier][nomArtisan] == undefined) {
+        database.ref("/listeMetier/" + metier + "/" + nomArtisan).set({
+            Lvl: lvlArtisan,
+            Commandes: "vide"
+        });
+    } else {
+        console.log("update");
+        let update = {};
+        update["/listeMetier/" + metier + "/" + nomArtisan + "/Lvl"] = lvlArtisan;
+        firebase.database().ref().update(update);
+    }
+}
+
 //-------------- MAIN ---------------------
 
 let listeMetier = "";
-database.ref('/listeMetier').once('value').then(function (snapshot) {
+listeNomMetier = ["Forestier", "Herboriste", "Mineur",
+    "Paysan", "Pecheur", "Trappeur",
+    "Armurier", "Bijoutier", "Boulanger",
+    "Cuisinier", "Ebeniste", "Maitre d 'armes",
+    "Maroquinier", "Tailleur"];
+
+database.ref('/listeMetier').on('value', function (snapshot) {
     listeMetier = snapshot.val();
     affichageMétierCollapse(listeMetier);
 });
-
-// listeNomMetier = ["Forestier", "Herboriste", "Mineur",
-//     "Paysan", "Pecheur", "Trappeur",
-//     "Armurier", "Bijoutier", "Boulanger",
-//     "Cuisinier", "Ebeniste", "Maitre d 'armes",
-//     "Maroquinier", "Tailleur"];
+createChoixMetier(listeNomMetier);
 
 
 // Exemple pour enregistrer des données 
@@ -200,6 +232,7 @@ database.ref('/listeMetier').once('value').then(function (snapshot) {
 //             Lvl: 110,
 //             Commandes: "vide",
 //         },
+//         null:"vide"
 //     },
 //     Herboriste: {
 //         null:"vide"

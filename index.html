@@ -422,6 +422,37 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="card shadow mb-4">
+                                    <!-- Card Header - Dropdown -->
+                                    <div
+                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary"> Ajouter ou mettre à jour un
+                                            métier
+                                        </h6>
+                                    </div>
+                                    <!-- Card Body -->
+                                    <div class="card-body">
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="nomArtisanSave">Nom de l'artisan</label>
+                                                <input type="text" class="form-control" id="nomArtisanSave"
+                                                    aria-describedby="emailHelp" placeholder="Nom de l'artisan" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="metierSave">Métier exercé</label>
+                                                <select class="form-control" id="metierSave" required>
+                                                    
+                                                  </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="lvlArtisanSave">Niveau du métier</label>
+                                                <input type="number" class="form-control" id="lvlArtisanSave" value="0"
+                                                    aria-describedby="emailHelp" placeholder="Niveau du métier" required>
+                                            </div>
+                                            <button type="button" class="btn btn-primary" onclick="addOrUpdateMetier()">Sauvegarder</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -446,18 +477,18 @@
     <script src="js/sb-admin-2.min.js"></script>
 
 
-  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-  <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
 
-  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
-  <!-- <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-analytics.js"></script> -->
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-analytics.js"></script> -->
 
-  <!-- Add Firebase products that you want to use -->
-  <!-- <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-auth.js"></script> -->
-  <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-database.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-auth.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-database.js"></script>
 
-  <script src="js/initializeFirebase.js"></script>
+    <script src="js/initializeFirebase.js"></script>
 
 
 </body>
