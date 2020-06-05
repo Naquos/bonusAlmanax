@@ -16,6 +16,7 @@ function affichageMétierCollapse(listeMetier) {
 function createHtmlMetierCollapse(nomMetier, listePersonnage) {
     let html = "";
     Object.keys(listePersonnage)
+        .filter(x => x != "null")
         .sort((x, y) => listePersonnage[y].Lvl - listePersonnage[x].Lvl)
         .forEach(
             nomPersonnage => html += createHtmlPersonnageInListe(nomMetier, nomPersonnage, listePersonnage[nomPersonnage].Lvl)
@@ -77,8 +78,10 @@ function afficherCommande(metier, joueur) {
     let commandes = "Commandes";
     let listeCommande = listeMetier[metier][joueur][commandes];
     let html = "";
-    Object.keys(listeCommande)
-        .forEach(x => html += createHtmlLigneCommande(listeCommande[x]));
+    if (typeof (listeCommande) != "string") {
+        Object.keys(listeCommande)
+            .forEach(x => html += createHtmlLigneCommande(listeCommande[x]));
+    }
     $("#bodyListeCommande").html(html);
 }
 
@@ -128,50 +131,83 @@ function createHtmlColorStatus(status) {
 
 //-------------- MAIN ---------------------
 
-let listeMetier = {
-    Paysan: {
-        NatWhisp: {
-            Lvl: 130,
-            Commandes: {},
-        },
-        Zewynn: {
-            Lvl: 130,
-            Commandes: {
-                MotRandom1: {
-                    DateDemande: "2020-06-14",
-                    Demandeur: "Alpha",
-                    Item: "Champoule Tout",
-                    Nombre: "12",
-                    Status: "Acceptée"
-                },
-                MotRandom2: {
-                    DateDemande: "2020-05-22",
-                    Demandeur: "NorAax",
-                    Item: "Graine de Tournesol",
-                    Nombre: "1000",
-                    Status: "Terminée"
-                },
-                MotRandom3: {
-                    DateDemande: "2020-06-14",
-                    Demandeur: "Amateratsu",
-                    Item: "Farine Eternelle",
-                    Nombre: "4",
-                    Status: "En cours"
-                },
-            },
-        },
-        Clemdu: {
-            Lvl: 98,
-            Commandes: {},
-        },
-        NewYoshi: {
-            Lvl: 110,
-            Commandes: {},
-        },
-    },
-    Herboriste: {},
-    Boulanger: {},
-    Pecheur: {},
-};
+let listeMetier = "";
+database.ref('/listeMetier').once('value').then(function (snapshot) {
+    listeMetier = snapshot.val();
+    affichageMétierCollapse(listeMetier);
+});
 
-affichageMétierCollapse(listeMetier);
+// listeNomMetier = ["Forestier", "Herboriste", "Mineur",
+//     "Paysan", "Pecheur", "Trappeur",
+//     "Armurier", "Bijoutier", "Boulanger",
+//     "Cuisinier", "Ebeniste", "Maitre d 'armes",
+//     "Maroquinier", "Tailleur"];
+
+
+// Exemple pour enregistrer des données 
+// Chaque action est irréversible, merci de pas décommenter les lignes suivantes sans raison
+
+
+// let id = "truc"
+// database.ref("/" + id).set({
+//     machin: "chose",
+//     test: 42
+// });
+
+
+// Exemple de la structure de donnée se trouvant dans la base de donnée
+// Chaque élément doit posséder une valeur, sinon elle se voit supprimer
+// Les chaînes de caractères "vide" sont là pour permettre à des données d'exister 
+// Mais ils ne doivent pas être affichées sur le site
+
+// let listeMetier = {
+//     Paysan: {
+//         NatWhisp: {
+//             Lvl: 130,
+//             Commandes: "vide",
+//         },
+//         Zewynn: {
+//             Lvl: 130,
+//             Commandes: {
+//                 MotRandom1: {
+//                     DateDemande: "2020-06-14",
+//                     Demandeur: "Alpha",
+//                     Item: "Champoule Tout",
+//                     Nombre: "12",
+//                     Status: "Acceptée"
+//                 },
+//                 MotRandom2: {
+//                     DateDemande: "2020-05-22",
+//                     Demandeur: "NorAax",
+//                     Item: "Graine de Tournesol",
+//                     Nombre: "1000",
+//                     Status: "Terminée"
+//                 },
+//                 MotRandom3: {
+//                     DateDemande: "2020-06-14",
+//                     Demandeur: "Amateratsu",
+//                     Item: "Farine Eternelle",
+//                     Nombre: "4",
+//                     Status: "En cours"
+//                 },
+//             },
+//         },
+//         Clemdu: {
+//             Lvl: 98,
+//             Commandes: "vide",
+//         },
+//         NewYoshi: {
+//             Lvl: 110,
+//             Commandes: "vide",
+//         },
+//     },
+//     Herboriste: {
+//         null:"vide"
+//     },
+//     Boulanger: {
+//         null:"vide"
+//     },
+//     Pecheur: {
+//         null:"vide"
+//     },
+// };
