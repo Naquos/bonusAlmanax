@@ -15,6 +15,7 @@ function affichageMétierCollapse(listeMetier) {
  */
 function createHtmlMetierCollapse(nomMetier, listePersonnage) {
     let html = "";
+    let nomMetierModif=nomMetier.split("'").join("_").split(" ").join("_");
     Object.keys(listePersonnage)
         .filter(x => x != "null")
         .sort((x, y) => listePersonnage[y].Lvl - listePersonnage[x].Lvl)
@@ -23,7 +24,7 @@ function createHtmlMetierCollapse(nomMetier, listePersonnage) {
         );
     return `
     <div style="border:#e3e3e3 solid 1px;padding:1px; border-radius: 10px;margin:2px;"
-        data-toggle="collapse" data-target="#`+ nomMetier + `Liste" aria-expanded="false" aria-controls="` + nomMetier + `Liste" 
+        data-toggle="collapse" data-target="#`+ nomMetierModif + `Liste" aria-expanded="false" aria-controls="` + nomMetierModif + `Liste" 
         onclick="changeArrow(this)">
         <div
             style="background-color: #e3e3e3; border-radius: 10px; color:#51636b; text-indent:2mm">
@@ -32,7 +33,7 @@ function createHtmlMetierCollapse(nomMetier, listePersonnage) {
             ` + nomMetier + `
         </div>
     </div>
-    <div class="collapse" id="`+ nomMetier + `Liste">
+    <div class="collapse" id="`+ nomMetierModif + `Liste">
         ` + html + `
     </div>`;
 }
