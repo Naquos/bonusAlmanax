@@ -137,6 +137,18 @@ function createChoixMetier(listeNomMetier) {
     let html = "";
     listeNomMetier.forEach(x => html += "<option>" + x + "</option>");
     $("#metierSave").html(html);
+    $("#metierCommande").html(html);
+}
+
+function listerArtisanDisponible() {
+    let html = "";
+    let metier = $("#metierCommande").val();
+    Object.keys(listeMetier[metier])
+        .filter(x => x != "null")
+        .forEach(x => html += "<option>" + x + "</option>");
+    let nomArtisanCommande = $("#nomArtisanCommande");
+    nomArtisanCommande.val("");
+    nomArtisanCommande.html(html);
 }
 
 function addOrUpdateMetier() {
@@ -153,11 +165,32 @@ function addOrUpdateMetier() {
             Commandes: "vide"
         });
     } else {
-        console.log("update");
         let update = {};
         update["/listeMetier/" + metier + "/" + nomArtisan + "/Lvl"] = lvlArtisan;
         firebase.database().ref().update(update);
     }
+}
+
+function addCommande() {
+    let demandeur = $("#demandeurCommande").val();
+    let metier = $("#metierCommande").val();
+    let nomArtisan = $("#nomArtisanCommande").val();
+    let item = $("#itemCommande").val();
+    let nbItem = $("#nbItemCommande").val();
+    if (demandeur == "" || metier == "" || nomArtisan == "" || item == "" || nbItem == 0 || nbItem == undefined) {
+        //Si la saisie est incorrecte on sort de la fonction
+        return;
+    }
+    let url = "/listeMetier/" + metier + "/" + nomArtisan + "/Commandes/" + (Math.floor(Math.random() * 10000000));
+    console.log(url);
+    database.ref(url).set({
+        DateDemande: new Date().toISOString().slice(0, 10),
+        Demandeur: demandeur,
+        Item: item,
+        Nombre: nbItem,
+        Status: "En cours"
+    });
+    setTimeout(500, afficherCommande(metier, nomArtisan));
 }
 
 //-------------- MAIN ---------------------
