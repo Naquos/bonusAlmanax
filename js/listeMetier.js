@@ -15,12 +15,12 @@ function affichageMétierCollapse(listeMetier) {
  */
 function createHtmlMetierCollapse(nomMetier, listePersonnage) {
     let html = "";
-    let nomMetierModif=nomMetier.split("'").join("_").split(" ").join("_");
+    let nomMetierModif = nomMetier.split("'").join("_").split(" ").join("_");
     Object.keys(listePersonnage)
         .filter(x => x != "null")
         .sort((x, y) => listePersonnage[y].Lvl - listePersonnage[x].Lvl)
         .forEach(
-            nomPersonnage => html += createHtmlPersonnageInListe(nomMetier, nomPersonnage, listePersonnage[nomPersonnage].Lvl)
+            nomPersonnage => html += createHtmlPersonnageInListe(nomPersonnage, listePersonnage[nomPersonnage].Lvl)
         );
     return `
     <div style="border:#e3e3e3 solid 1px;padding:1px; border-radius: 10px;margin:2px;"
@@ -55,37 +55,48 @@ function changeArrow(element) {
 
 /**
  * 
- * @param {String} nomMetier 
  * @param {String} nomPersonnage 
  * @param {String} lvlMetier 
  */
-function createHtmlPersonnageInListe(nomMetier, nomPersonnage, lvlMetier) {
-    if(nomMetier == "Maitre d 'armes") {
-        //Petite modif pour éviter de faire planter le html
-        nomMetier = "MaitreArme";
-    }
+function createHtmlPersonnageInListe(nomPersonnage, lvlMetier) {
     return `
     <div style="background-color: #f3f3f3; border-radius: 10px;
                 margin-left:3%;width:94%;border:#e3e3e3 solid 1px; 
                 color:#51636b; text-indent:2mm" 
-                onclick='afficherCommande("`+ nomMetier + `","` + nomPersonnage + `")'>
+                onclick='afficherCommande("` + nomPersonnage + `")'>
         `+ nomPersonnage + ` Lvl ` + lvlMetier + `
     </div>`;
+}
+/**
+ * 
+ * @param {String} joueur 
+ */
+function getListeCommande(joueur) {
+    let commandes = "Commandes";
+    let dateDemande = "DateDemande";
+    let result = {};
+    Object.keys(listeMetier)
+        .forEach(function (x) {
+            if (listeMetier[x][joueur]) {
+                Object.keys(listeMetier[x][joueur][commandes])
+                    .forEach(function (y) {
+                        if (listeMetier[x][joueur][commandes][y][dateDemande]) {
+                            result[y] = listeMetier[x][joueur][commandes][y];
+                        }
+                    });
+            }
+        });
+    return result;
 }
 
 /**
  * 
- * @param {String} metier 
  * @param {String} joueur 
  */
-function afficherCommande(metier, joueur) {
-    if(metier == "MaitreArme") {
-        //Petite modif pour éviter de faire planter le html
-        metier = "Maitre d 'armes";
-    }
+function afficherCommande(joueur) {
     $("#nomJoueurCommande").html(joueur);
-    let commandes = "Commandes";
-    let listeCommande = listeMetier[metier][joueur][commandes];
+
+    let listeCommande = getListeCommande(joueur);
     let html = "";
     if (typeof (listeCommande) != "string") {
         Object.keys(listeCommande)
@@ -209,7 +220,7 @@ listeNomMetier = ["Forestier", "Herboriste", "Mineur",
     "Paysan", "Pecheur", "Trappeur",
     "Armurier", "Bijoutier", "Boulanger",
     "Cuisinier", "Ebeniste", "Maitre d 'armes",
-    "Maroquinier", "Tailleur"];
+    "Maroquinier", "Tailleur", "Drop"];
 
 database.ref('/listeMetier').on('value', function (snapshot) {
     listeMetier = snapshot.val();
