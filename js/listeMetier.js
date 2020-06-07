@@ -100,18 +100,19 @@ function afficherCommande(joueur) {
     let html = "";
     if (typeof (listeCommande) != "string") {
         Object.keys(listeCommande)
-            .forEach(x => html += createHtmlLigneCommande(listeCommande[x]));
+            .forEach(x => html += createHtmlLigneCommande(x, joueur, listeCommande[x]));
     }
     $("#bodyListeCommande").html(html);
 }
 
 /**
- * 
+ * @param {int} idCommande
+ * @param {String} joueur
  * @param {Objet} detailCommande 
  */
-function createHtmlLigneCommande(detailCommande) {
+function createHtmlLigneCommande(idCommande, joueur, detailCommande) {
     return `
-        <tr>
+        <tr id="test">
             <td>
                 `+ detailCommande.DateDemande.split("-").reverse().join("/") + `
             </td>
@@ -127,7 +128,52 @@ function createHtmlLigneCommande(detailCommande) {
             <td>
             `   + createHtmlColorStatus(detailCommande.Status) + `
             </td>
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-cogs"></i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#" onclick="actualiserEtatCommande(`+ idCommande + `,'` + joueur + `','Acceptée',this)">Acceptée</a>
+                        <a class="dropdown-item" href="#" onclick="actualiserEtatCommande(`+ idCommande + `,'` + joueur + `','Refusée',this)">Refusée</a>
+                        <a class="dropdown-item" href="#" onclick="actualiserEtatCommande(`+ idCommande + `,'` + joueur + `','En cours',this)">En cours</a>
+                        <a class="dropdown-item" href="#" onclick="actualiserEtatCommande(`+ idCommande + `,'` + joueur + `','Terminée',this)">Terminée</a>
+                    </div>
+                </div>
+            </td>
         </tr>`;
+}
+
+/**
+ * 
+ * @param {int} idCommande 
+ * @param {String} joueur
+ * @param {String} nouvelEtat 
+ * @param {elementHtml} elementHtml 
+ */
+function actualiserEtatCommande(idCommande, joueur, nouvelEtat, elementHtml) {
+    let metier = trouverMetierCommande(idCommande, joueur);
+    let urlCommande = "/listeMetier/" + metier + "/" + joueur + "/Commandes/" + idCommande;
+    let update = {};
+    update[urlCommande + "/Status"] = nouvelEtat;
+    firebase.database().ref().update(update);
+
+    let tr = $(elementHtml).parent().parent().parent().parent();
+    $(tr.children("td")[4]).html(createHtmlColorStatus(nouvelEtat));
+}
+
+function trouverMetierCommande(idCommande, joueur) {
+    let metier = "";
+    let commandes = "Commandes";
+    Object.keys(listeMetier)
+        .forEach(function (nomMetier) {
+            if (listeMetier[nomMetier][joueur]) {
+                if (listeMetier[nomMetier][joueur][commandes][idCommande]) {
+                    metier = nomMetier;
+                }
+            }
+        });
+    return metier;
 }
 
 /**
