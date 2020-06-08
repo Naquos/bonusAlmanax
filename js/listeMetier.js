@@ -217,12 +217,34 @@ function listerArtisanDisponible() {
     nomArtisanCommande.html(html);
 }
 
+
+function afficherMessageEchecMajMetier() {
+    $("#informationArtisan").html(`<div class="alert alert-danger alert-dismissible fade show" role="alert" id="messagePlainte">
+                                        Un champ a mal été remplie
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                                            style="width: auto;">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>`);
+}
+
+function afficherMessageReussiteMajMetier() {
+    $("#informationArtisan").html(`<div class="alert alert-success alert-dismissible fade show" role="alert" id="messagePlainte">
+                                        Votre ajout a été pris en compte.
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                                            style="width: auto;">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>`);
+}
+
 function addOrUpdateMetier() {
     let nomArtisan = $("#nomArtisanSave").val();
     let metier = $("#metierSave").val();
     let lvlArtisan = $("#lvlArtisanSave").val();
     if (nomArtisan == "" || lvlArtisan == 0) {
         //Si la saisie est incorrecte, on sort de la fonction
+        afficherMessageEchecMajMetier();
         return;
     }
     if (listeMetier[metier][nomArtisan] == undefined) {
@@ -235,6 +257,11 @@ function addOrUpdateMetier() {
         update["/listeMetier/" + metier + "/" + nomArtisan + "/Lvl"] = lvlArtisan;
         firebase.database().ref().update(update);
     }
+
+    $("#nomArtisanSave").val("");
+    $("#metierSave").val("");
+    $("#lvlArtisanSave").val("");
+    afficherMessageReussiteMajMetier();
 }
 
 
