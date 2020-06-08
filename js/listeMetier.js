@@ -162,7 +162,7 @@ function supprimerCommande(idCommande,joueur,elementHtml) {
     let urlCommandeNull = "/listeMetier/" + metier + "/" + joueur + "/Commandes/null";
     let update = {};
     //Toutes valeurs vide est automatiquement supprimée
-    update[urlCommande] = "";
+    update[urlCommande] = null;
     //Permet juste au paramêtre commande de ne pas être supprimé de la base
     update[urlCommandeNull] = "vide";
     firebase.database().ref().update(update);
@@ -179,13 +179,17 @@ function supprimerCommande(idCommande,joueur,elementHtml) {
  * @param {elementHtml} elementHtml 
  */
 function actualiserEtatCommande(idCommande, joueur, nouvelEtat, elementHtml) {
+    //Modification de la commande
     let metier = trouverMetierCommande(idCommande, joueur);
     let urlCommande = "/listeMetier/" + metier + "/" + joueur + "/Commandes/" + idCommande;
     let update = {};
     update[urlCommande + "/Status"] = nouvelEtat;
     firebase.database().ref().update(update);
 
+    //Modification du visuel
+    //On remarquera que la variable s'appelle tr comme le <tr></tr> qui correspond à une ligne dans un tableau
     let tr = $(elementHtml).parent().parent().parent().parent();
+    //Ici on modifie la cinquième cellule de la ligne
     $(tr.children("td")[4]).html(createHtmlColorStatus(nouvelEtat));
 }
 
