@@ -237,6 +237,27 @@ function addOrUpdateMetier() {
     }
 }
 
+
+function afficherMessageEchecCommande() {
+    $("#informationCommande").html(`<div class="alert alert-danger alert-dismissible fade show" role="alert" id="messagePlainte">
+                                        Un champ a mal été remplie
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                                            style="width: auto;">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>`);
+}
+
+function afficherMessageReussiteCommande() {
+    $("#informationCommande").html(`<div class="alert alert-success alert-dismissible fade show" role="alert" id="messagePlainte">
+                                        Votre commande a été pris en compte.
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                                            style="width: auto;">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>`);
+}
+
 function addCommande() {
     let demandeur = $("#demandeurCommande").val();
     let metier = $("#metierCommande").val();
@@ -245,6 +266,7 @@ function addCommande() {
     let nbItem = $("#nbItemCommande").val();
     if (demandeur == "" || metier == "" || nomArtisan == "" || item == "" || nbItem == 0 || nbItem == undefined) {
         //Si la saisie est incorrecte on sort de la fonction
+        afficherMessageEchecCommande();
         return;
     }
     let url = "/listeMetier/" + metier + "/" + nomArtisan + "/Commandes/" + (Math.floor(Math.random() * 10000000));
@@ -256,6 +278,14 @@ function addCommande() {
         Nombre: nbItem,
         Status: "En cours"
     });
+    //Une fois la commande faite on vide les champs pour éviter un spam incessant ^^
+    $("#demandeurCommande").val("");
+    $("#metierCommande").val("");
+    $("#nomArtisanCommande").val("");
+    $("#itemCommande").val("");
+    $("#nbItemCommande").val("");
+    afficherMessageReussiteCommande();
+
     setTimeout(500, afficherCommande(metier, nomArtisan));
 }
 
