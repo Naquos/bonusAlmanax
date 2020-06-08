@@ -129,7 +129,7 @@ function createHtmlLigneCommande(idCommande, joueur, detailCommande) {
             `   + createHtmlColorStatus(detailCommande.Status) + `
             </td>
             <td>
-                <div class="dropdown">
+                <div class="row">
                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-cogs"></i>
                     </button>
@@ -141,7 +141,34 @@ function createHtmlLigneCommande(idCommande, joueur, detailCommande) {
                     </div>
                 </div>
             </td>
+            <td>
+                <button type="button" class="btn btn-outline-danger" onclick="supprimerCommande(`+ idCommande + `,'` + joueur + `',this)">
+                    <i class="fas fa-trash-restore"></i>
+                </button>
+            </td>
         </tr>`;
+}
+
+/**
+ * 
+ * @param {int} idCommande 
+ * @param {String} joueur
+ * @param {elementHtml} elementHtml 
+ */
+function supprimerCommande(idCommande,joueur,elementHtml) {
+    //Supression de la commande en base
+    let metier = trouverMetierCommande(idCommande, joueur);
+    let urlCommande = "/listeMetier/" + metier + "/" + joueur + "/Commandes/" + idCommande;
+    let urlCommandeNull = "/listeMetier/" + metier + "/" + joueur + "/Commandes/null";
+    let update = {};
+    //Toutes valeurs vide est automatiquement supprimée
+    update[urlCommande] = null;
+    //Permet juste au paramêtre commande de ne pas être supprimé de la base
+    update[urlCommandeNull] = "vide";
+    firebase.database().ref().update(update);
+
+    //Suppression de la ligne sur le visuel
+    $(elementHtml).parent().parent().remove();
 }
 
 /**
@@ -152,13 +179,17 @@ function createHtmlLigneCommande(idCommande, joueur, detailCommande) {
  * @param {elementHtml} elementHtml 
  */
 function actualiserEtatCommande(idCommande, joueur, nouvelEtat, elementHtml) {
+    //Modification de la commande
     let metier = trouverMetierCommande(idCommande, joueur);
     let urlCommande = "/listeMetier/" + metier + "/" + joueur + "/Commandes/" + idCommande;
     let update = {};
     update[urlCommande + "/Status"] = nouvelEtat;
     firebase.database().ref().update(update);
 
+    //Modification du visuel
+    //On remarquera que la variable s'appelle tr comme le <tr></tr> qui correspond à une ligne dans un tableau
     let tr = $(elementHtml).parent().parent().parent().parent();
+    //Ici on modifie la cinquième cellule de la ligne
     $(tr.children("td")[4]).html(createHtmlColorStatus(nouvelEtat));
 }
 
@@ -190,7 +221,8 @@ function createHtmlColorStatus(status) {
         color = "yellow";
     }
     return `
-        <div style="background-color:` + color + `;margin:auto; width:20px;height:20px; border-radius:100%">
+        <div style="color:` + color + `;font-weight:bold">
+            `+ status + `
         </div>
     `;
 }
@@ -217,12 +249,34 @@ function listerArtisanDisponible() {
     nomArtisanCommande.html(html);
 }
 
+
+function afficherMessageEchecMajMetier() {
+    $("#informationArtisan").html(`<div class="alert alert-danger alert-dismissible fade show" role="alert" id="messagePlainte">
+                                        Un champ a mal été remplie
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                                            style="width: auto;">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>`);
+}
+
+function afficherMessageReussiteMajMetier() {
+    $("#informationArtisan").html(`<div class="alert alert-success alert-dismissible fade show" role="alert" id="messagePlainte">
+                                        Votre ajout a été pris en compte.
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                                            style="width: auto;">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>`);
+}
+
 function addOrUpdateMetier() {
     let nomArtisan = $("#nomArtisanSave").val();
     let metier = $("#metierSave").val();
     let lvlArtisan = $("#lvlArtisanSave").val();
     if (nomArtisan == "" || lvlArtisan == 0) {
         //Si la saisie est incorrecte, on sort de la fonction
+        afficherMessageEchecMajMetier();
         return;
     }
     if (listeMetier[metier][nomArtisan] == undefined) {
@@ -235,6 +289,32 @@ function addOrUpdateMetier() {
         update["/listeMetier/" + metier + "/" + nomArtisan + "/Lvl"] = lvlArtisan;
         firebase.database().ref().update(update);
     }
+
+    $("#nomArtisanSave").val("");
+    $("#metierSave").val("");
+    $("#lvlArtisanSave").val("");
+    afficherMessageReussiteMajMetier();
+}
+
+
+function afficherMessageEchecCommande() {
+    $("#informationCommande").html(`<div class="alert alert-danger alert-dismissible fade show" role="alert" id="messagePlainte">
+                                        Un champ a mal été remplie
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                                            style="width: auto;">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>`);
+}
+
+function afficherMessageReussiteCommande() {
+    $("#informationCommande").html(`<div class="alert alert-success alert-dismissible fade show" role="alert" id="messagePlainte">
+                                        Votre commande a été pris en compte.
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                                            style="width: auto;">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>`);
 }
 
 function addCommande() {
@@ -245,6 +325,7 @@ function addCommande() {
     let nbItem = $("#nbItemCommande").val();
     if (demandeur == "" || metier == "" || nomArtisan == "" || item == "" || nbItem == 0 || nbItem == undefined) {
         //Si la saisie est incorrecte on sort de la fonction
+        afficherMessageEchecCommande();
         return;
     }
     let url = "/listeMetier/" + metier + "/" + nomArtisan + "/Commandes/" + (Math.floor(Math.random() * 10000000));
@@ -256,6 +337,14 @@ function addCommande() {
         Nombre: nbItem,
         Status: "En cours"
     });
+    //Une fois la commande faite on vide les champs pour éviter un spam incessant ^^
+    $("#demandeurCommande").val("");
+    $("#metierCommande").val("");
+    $("#nomArtisanCommande").val("");
+    $("#itemCommande").val("");
+    $("#nbItemCommande").val("");
+    afficherMessageReussiteCommande();
+
     setTimeout(500, afficherCommande(metier, nomArtisan));
 }
 

@@ -412,7 +412,7 @@
                                                                 <th scope="col">Item</th>
                                                                 <th scope="col">Nombre</th>
                                                                 <th scope="col">Status</th>
-                                                                <th scope="col">Action</th>
+                                                                <th scope="col" colspan="2" >Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody id="bodyListeCommande">
@@ -434,35 +434,35 @@
                                             </div>
                                             <!-- Card Body -->
                                             <div class="card-body">
-                                                <div class="form-group">
-                                                    <label for="demandeurCommande">Demandeur</label>
-                                                    <input type="text" class="form-control" id="demandeurCommande"
-                                                        aria-describedby="emailHelp" placeholder="Demandeur" required>
-                                                </div>
+                                                <div id="informationCommande"></div>
                                                 <form>
+                                                    <div class="form-group">
+                                                        <label for="demandeurCommande">Demandeur</label>
+                                                        <input type="text" class="form-control" id="demandeurCommande"
+                                                            aria-describedby="emailHelp" placeholder="Demandeur">
+                                                    </div>
                                                     <div class="form-group">
                                                         <label for="metierCommande">Métier de l'artisan</label>
                                                         <select class="form-control" id="metierCommande"
-                                                            onchange="listerArtisanDisponible()" required>
+                                                            onchange="listerArtisanDisponible()">
 
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="nomArtisanCommande">Nom de l'artisan</label>
-                                                        <select class="form-control" id="nomArtisanCommande" required>
+                                                        <select class="form-control" id="nomArtisanCommande">
 
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="itemCommande">Item demandé</label>
                                                         <input type="text" class="form-control" id="itemCommande"
-                                                            aria-describedby="emailHelp" placeholder="Item demandé"
-                                                            required>
+                                                            aria-describedby="emailHelp" placeholder="Item demandé">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="nbItemCommande">Nombre d'item</label>
                                                         <input type="number" class="form-control" id="nbItemCommande"
-                                                            value="0" aria-describedby="emailHelp" required>
+                                                            value="0" aria-describedby="emailHelp">
                                                     </div>
                                                     <button type="button" class="btn btn-primary"
                                                         onclick="addCommande()">Commander</button>
@@ -482,23 +482,23 @@
                                             </div>
                                             <!-- Card Body -->
                                             <div class="card-body">
+                                                <div id="informationArtisan"></div>
                                                 <form>
                                                     <div class="form-group">
                                                         <label for="nomArtisanSave">Nom de l'artisan</label>
                                                         <input type="text" class="form-control" id="nomArtisanSave"
-                                                            aria-describedby="emailHelp" placeholder="Nom de l'artisan"
-                                                            required>
+                                                            aria-describedby="emailHelp" placeholder="Nom de l'artisan">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="metierSave">Métier exercé</label>
-                                                        <select class="form-control" id="metierSave" required>
+                                                        <select class="form-control" id="metierSave">
 
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="lvlArtisanSave">Niveau du métier</label>
                                                         <input type="number" class="form-control" id="lvlArtisanSave"
-                                                            value="0" aria-describedby="emailHelp" required>
+                                                            value="0" aria-describedby="emailHelp">
                                                     </div>
                                                     <button type="button" class="btn btn-primary"
                                                         onclick="addOrUpdateMetier()">Sauvegarder</button>

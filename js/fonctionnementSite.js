@@ -18,4 +18,4 @@ function afficherUnElement(idElement) {
 }
 
 // ------------------------- MAIN ----------------------
-afficherUnElement("div1");
+afficherUnElement("div6");
