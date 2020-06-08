@@ -129,7 +129,7 @@ function createHtmlLigneCommande(idCommande, joueur, detailCommande) {
             `   + createHtmlColorStatus(detailCommande.Status) + `
             </td>
             <td>
-                <div class="dropdown">
+                <div class="row">
                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-cogs"></i>
                     </button>
@@ -141,7 +141,34 @@ function createHtmlLigneCommande(idCommande, joueur, detailCommande) {
                     </div>
                 </div>
             </td>
+            <td>
+                <button type="button" class="btn btn-outline-danger" onclick="supprimerCommande(`+ idCommande + `,'` + joueur + `',this)">
+                    <i class="fas fa-trash-restore"></i>
+                </button>
+            </td>
         </tr>`;
+}
+
+/**
+ * 
+ * @param {int} idCommande 
+ * @param {String} joueur
+ * @param {elementHtml} elementHtml 
+ */
+function supprimerCommande(idCommande,joueur,elementHtml) {
+    //Supression de la commande en base
+    let metier = trouverMetierCommande(idCommande, joueur);
+    let urlCommande = "/listeMetier/" + metier + "/" + joueur + "/Commandes/" + idCommande;
+    let urlCommandeNull = "/listeMetier/" + metier + "/" + joueur + "/Commandes/null";
+    let update = {};
+    //Toutes valeurs vide est automatiquement supprimée
+    update[urlCommande] = "";
+    //Permet juste au paramêtre commande de ne pas être supprimé de la base
+    update[urlCommandeNull] = "vide";
+    firebase.database().ref().update(update);
+
+    //Suppression de la ligne sur le visuel
+    $(elementHtml).parent().parent().remove();
 }
 
 /**
@@ -190,7 +217,8 @@ function createHtmlColorStatus(status) {
         color = "yellow";
     }
     return `
-        <div style="background-color:` + color + `;margin:auto; width:20px;height:20px; border-radius:100%">
+        <div style="color:` + color + `;font-weight:bold">
+            `+ status + `
         </div>
     `;
 }
