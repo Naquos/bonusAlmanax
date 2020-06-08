@@ -218,7 +218,7 @@ function createHtmlColorStatus(status) {
     } else if (status == "Terminée") {
         color = "gray";
     } else if (status == "En cours") {
-        color = "yellow";
+        color = "navy";
     }
     return `
         <div style="color:` + color + `;font-weight:bold">
