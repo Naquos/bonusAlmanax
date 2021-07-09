@@ -9,4 +9,4 @@ app.get("/", function (req, res) {
 
 
 app.use('/public', express.static('public'));
-app.listen(port);
+app.listen(process.env.PORT || port);
