@@ -5,11 +5,13 @@
     <title>Bonus Almanax</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="public/css/style.css">
+
 
     <link rel="manifest" href="manifest.webmanifest">
-
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
 
     <link
@@ -24,6 +26,7 @@
 </head>
 
 <body>
+
     <style>
         img {
             width: 80%;
@@ -412,7 +415,7 @@
                                                                 <th scope="col">Item</th>
                                                                 <th scope="col">Nombre</th>
                                                                 <th scope="col">Status</th>
-                                                                <th scope="col" colspan="2" >Action</th>
+                                                                <th scope="col" colspan="2">Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody id="bodyListeCommande">
@@ -521,14 +524,14 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="public/vendor/jquery/jquery.min.js"></script>
+    <script src="public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="public/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="public/js/sb-admin-2.min.js"></script>
 
 
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
@@ -542,16 +545,16 @@
     <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-database.js"></script>
 
-    <script src="js/initializeFirebase.js"></script>
+    <script src="public/js/initializeFirebase.js"></script>
 
 
 </body>
 
 </html>
 <!----------   Le code JavaScript a été déplacé dans les fichiers js écrit ci-dessous         ----------------->
-<script src="js/bonusAlmanax.js"></script>
-<script src="js/fonctionnementSite.js"></script>
-<script src="js/listeMetier.js"></script>
+<script src="public/js/bonusAlmanax.js"></script>
+<script src="public/js/fonctionnementSite.js"></script>
+<script src="public/js/listeMetier.js"></script>
 <script>
     function afficherMessagePlainte() {
         $("#messagePlainte").html(`<div class="alert alert-success alert-dismissible fade show" role="alert" id="messagePlainte">
