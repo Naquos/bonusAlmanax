@@ -1,0 +1,29 @@
+image : node:latest
+
+stages:
+  - install
+  - heroku
+
+cache :
+  paths :
+   - node_modules/
+
+install :
+ stage : install
+ artifacts:
+    paths:
+      - node_modules/
+ script:
+  - npm install
+
+
+heroku:
+  stage: heroku
+  image: ruby:latest
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=budev --api-key=785c14c7-5e4f-471d-aa02-1c0fe641b04a
+  only:
+    - master
